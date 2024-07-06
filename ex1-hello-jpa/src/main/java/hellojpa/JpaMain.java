@@ -3,7 +3,6 @@ package hellojpa;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class JpaMain {
 
@@ -18,15 +17,19 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("user1");
-            member.setCreatedBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
-
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
 
             em.flush();
             em.clear();
+
+            Member m1 = em.find(Member.class, member1.getId());
+            System.out.println("m1.getClass() = " + m1.getClass());
+
+            Member reference = em.getReference(Member.class, member1.getId());
+            System.out.println("reference = " + reference.getClass());
+
 
             tx.commit();
         } catch(Exception e){

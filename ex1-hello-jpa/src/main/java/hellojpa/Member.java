@@ -2,9 +2,6 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 @Entity
 public class Member extends BaseEntity{
 
@@ -15,10 +12,9 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
-
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    private Team team;
 
     public Long getId() {
         return id;
@@ -35,5 +31,11 @@ public class Member extends BaseEntity{
     public void setUsername(String username) {
         this.username = username;
     }
+    public Team getTeam() {
+        return team;
+    }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
