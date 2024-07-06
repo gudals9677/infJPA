@@ -3,6 +3,7 @@ package hellojpa;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class JpaMain {
 
@@ -17,20 +18,21 @@ public class JpaMain {
 
         try {
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            em.persist(member1);
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member1.getId());
-            System.out.println("m1.getClass() = " + m1.getClass());
-
-            Member reference = em.getReference(Member.class, member1.getId());
-            System.out.println("reference = " + reference.getClass());
-
-
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
+            
             tx.commit();
         } catch(Exception e){
             tx.rollback();
