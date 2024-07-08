@@ -18,13 +18,13 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", 10000));
-            member.setWorkPeriod(new Period());
+            Address address = new Address("city", "street", 10000);
 
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(address);
             em.persist(member);
-            
+
             tx.commit();
         } catch(Exception e){
             tx.rollback();
